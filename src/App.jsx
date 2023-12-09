@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
-import { Box, Typography, TextField, Container, InputAdornment, Button} from '@mui/material';
+import { createClient } from 'pexels';
+import { Box, Button, Container, InputAdornment, TextField, Typography} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import './App.css';
 import logo from "./assets/instantaneo.png"
+import './App.css';
 
 function App() {
   const [searchText, setSearchText] = useState('')
+  const client = createClient('MUDPQkKEMfvgHVnhWoGKLGoc1lPMRcQKZuH3dRBR87Hc3FiLmbuBqAeY');
 
   function handleSearch(){
-    console.log(searchText)
+    // Chamada da API
+    client.photos.search({ query: searchText, per_page: 15, locale: 'pt-BR' }).then(photos => {console.log(photos)});
   }
 
   const handleTextChange = (event) => {
