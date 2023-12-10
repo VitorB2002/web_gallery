@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 import { createClient } from 'pexels';
-import { Box, Button, Container, InputAdornment, TextField, Typography} from '@mui/material';
+import { Box, Button, Container, Grid, InputAdornment, TextField, Typography} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import logo from "./assets/instantaneo.png"
 import './App.css';
 
 function App() {
   const [searchText, setSearchText] = useState('')
+  const [gallery, setGallery] = useState([])
   const client = createClient('MUDPQkKEMfvgHVnhWoGKLGoc1lPMRcQKZuH3dRBR87Hc3FiLmbuBqAeY');
 
   function handleSearch(){
     // Chamada da API
-    client.photos.search({ query: searchText, per_page: 15, locale: 'pt-BR' }).then(photos => {console.log(photos)});
+    client.photos.search({ query: searchText, per_page: 15, locale: 'pt-BR', orientation: 'square' }).then(photos => {setGallery(photos.photos)});
   }
 
   const handleTextChange = (event) => {
@@ -77,9 +78,28 @@ function App() {
 
       </hero>
 
-      <main>
-
-      </main>
+      <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <Grid container gap={10} maxWidth={"75%"} alignContent={"center"} justifyContent={"center"}>
+          {gallery.map((photo, index) => (
+            <Grid 
+              key={index} 
+              item
+              xs="auto"
+              sx={{
+                width: "320px",
+                height: "380px",
+                padding: "15px 15px 80px 15px",
+                border: "2px solid #939393"
+              }}
+            >
+              <img class="polaroid" src={photo.src.original} alt=''/>
+              <Typography>
+                Autor | Foto | Link
+              </Typography>
+            </Grid>
+            ))}
+        </Grid>
+      </Box>
     </body>
   );
 }
