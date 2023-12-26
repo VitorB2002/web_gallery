@@ -3,19 +3,27 @@ import { createClient } from 'pexels';
 import { Box, Button, Container, Grid, InputAdornment, TextField, Typography} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import logo from "./assets/instantaneo.png"
+import buscando from "./assets/buscando.gif"
 import './App.css';
 
 function App() {
   const [searchText, setSearchText] = useState('')
   const [gallery, setGallery] = useState([])
   const client = createClient('MUDPQkKEMfvgHVnhWoGKLGoc1lPMRcQKZuH3dRBR87Hc3FiLmbuBqAeY');
+  const [searching, setSearching] = useState(false)
 
-  function handleSearch(){
+  async function handleSearch(){
     // Chamada da API
-    client.photos.search({ query: searchText, per_page: 15, locale: 'pt-BR', orientation: 'square' }).then(photos => {setGallery(photos.photos)});
+    await client.photos.search({
+      query: searchText, per_page: 15, locale: 'pt-BR', orientation: 'square'
+    }).then(photos => {
+      setGallery(photos.photos)
+    }).catch(response => {console.log(response)});
+    setSearching(false)
   }
 
   const handleTextChange = (event) => {
+    setSearching(true)
     setSearchText(event.target.value)
   }
 
@@ -78,7 +86,7 @@ function App() {
       </hero>
 
       <main>
-        <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+        <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
           <Grid container gap={10} maxWidth={"75%"} alignContent={"center"} justifyContent={"center"}>
             {gallery.map((photo, index) => (
               <Grid 
@@ -100,7 +108,22 @@ function App() {
               </Grid>
               ))}
           </Grid>
+          {searching ? 
+            (
+              <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+                Preparando busca
+                <img src={buscando}></img>
+                pressione "enter" ou aperte na lupa
+              </Box>
+            ) : 
+            (
+              <Box sx={{display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+                Sem fotos para mostrar, realize uma busca
+              </Box>
+            )
+          }
         </Box>
+        
       </main>
 
       <footer>
