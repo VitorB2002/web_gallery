@@ -31,10 +31,10 @@ function App() {
         <Box sx={{
           display: "flex",
           height: "60px",
+          width: "100%",
           alignItems: "center",
           backgroundColor: "#1876d3",
           gap: "25px",
-          padding: "10px"
         }}>
           <Box>
             <img src={logo} height={50}/>
@@ -46,7 +46,7 @@ function App() {
       
       <hero>
         <Container
-          sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: "25px", marginBottom: "25px"}}
+          sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: "25px", marginBottom: "25px", height: "200px"}}
         >
           <Box>
             <Typography color={"#565656"} align='center' fontSize={"2em"}>Busque fotos para sua galeria, trabalho ou estudos</Typography>
@@ -75,32 +75,45 @@ function App() {
             onKeyDown={handleKey}
           />
         </Container>
-
       </hero>
 
-      <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-        <Grid container gap={10} maxWidth={"75%"} alignContent={"center"} justifyContent={"center"}>
-          {gallery.map((photo, index) => (
-            <Grid 
-              key={index} 
-              item
-              xs="auto"
-              sx={{
-                width: "320px",
-                height: "380px",
-                padding: "15px 15px 80px 15px",
-                border: "2px solid #939393"
-              }}
-            >
-              <img class="polaroid" src={photo.src.original} alt={photo.alt}/>
-              <Typography>
-                Fotografo - <a href={photo.photographer_url}>{photo.photographer}</a> <br></br> 
-                <a href={photo.url}>Acesse aqui</a>
-              </Typography>
-            </Grid>
-            ))}
-        </Grid>
-      </Box>
+      <main>
+        <Box sx={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+          <Grid container gap={10} maxWidth={"75%"} alignContent={"center"} justifyContent={"center"}>
+            {gallery.map((photo, index) => (
+              <Grid 
+                key={index} 
+                item
+                xs="auto"
+                sx={{
+                  width: "320px",
+                  height: "380px",
+                  padding: "15px 15px 80px 15px",
+                  border: "2px solid #939393"
+                }}
+              >
+                <img class="polaroid" src={photo.src.original} alt={photo.alt}/>
+                <Typography>
+                  Fotografo - <a href={photo.photographer_url}>{photo.photographer}</a> <br></br> 
+                  <a href={photo.url}>Acesse aqui</a>
+                </Typography>
+              </Grid>
+              ))}
+          </Grid>
+        </Box>
+      </main>
+
+      <footer>
+        <Box sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "45px",
+          backgroundColor: "#1876d3",
+        }}>
+          <p>Photos provided by <a href="https://www.pexels.com">Pexels</a></p>
+        </Box>
+      </footer>
     </body>
   );
 }
