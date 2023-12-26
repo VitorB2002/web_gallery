@@ -40,13 +40,13 @@ function App() {
             <img src={logo} height={50}/>
           </Box>
           
-          <Typography color={"#ffffff"} fontSize={36}>My web Gallery</Typography>
+          <Typography color={"#ffffff"} fontSize={36}>Polaroid Gallery</Typography>
         </Box>
       </header>
       
       <hero>
         <Container
-          sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: "25px"}}
+          sx={{display: "flex", flexDirection: "column", alignItems: "center", gap: "25px", marginBottom: "25px"}}
         >
           <Box>
             <Typography color={"#565656"} align='center' fontSize={"2em"}>Busque fotos para sua galeria, trabalho ou estudos</Typography>
@@ -59,7 +59,7 @@ function App() {
             placeholder='Ex: dia ensolarado'
             value={searchText}
             onChange={handleTextChange}
-            sx={{width: "50%"}}
+            sx={{width: "100%"}}
             InputProps={{
               endAdornment: (
                 <InputAdornment position='end'>
@@ -92,9 +92,10 @@ function App() {
                 border: "2px solid #939393"
               }}
             >
-              <img class="polaroid" src={photo.src.original} alt=''/>
+              <img class="polaroid" src={photo.src.original} alt={photo.alt}/>
               <Typography>
-                Autor | Foto | Link
+                Fotografo - <a href={photo.photographer_url}>{photo.photographer}</a> <br></br> 
+                <a href={photo.url}>Acesse aqui</a>
               </Typography>
             </Grid>
             ))}
